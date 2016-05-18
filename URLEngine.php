@@ -14,7 +14,18 @@
             $split = explode("/", $url);
             //Split template on every '/'
             $template = explode("/", $this->template);
-            //Create empty array
+
+            foreach($template as $key => $t)
+            {
+                if(strpos($t, "{") === false && strpos($t, "}") === false)
+                {
+                    if($t != $split[$key])
+                    {
+                        return false;
+                    }
+                }
+            }
+
             $tmpSplit = [];
             foreach($template as $t)
             {
