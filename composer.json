@@ -1,0 +1,20 @@
+{
+    "name": "landscape/landscape.php.url",
+    "type": "library",
+    "description": "URL parsing module for LandscapePHP",
+    "keywords": ["url", "parsing", "module", "landscape"],
+    "homepage": "https://github.com/LandscapeFramwework/LandscapeModuleURL",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Messerschmidt",
+            "email": "tom.messerschmidt@googlemail.com" 
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
