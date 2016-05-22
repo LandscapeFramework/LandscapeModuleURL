@@ -15,7 +15,7 @@
         {
             $parser = new URLEngine($template);
             $result = $parser->parse($url);
-            $this->assertTrue($result == $expected);
+            $this->assertEquals($result, $expected);
         }
 
         public function providerTestParser()
@@ -25,6 +25,8 @@
                 array('/blg12/show-some/{file}', '/blg12/show-some/page', array('file' => 'page')),
                 array('/blog/{name}/show', '/index/', false),
                 array('/http/{abc}/x/{def}', '/http/a/x/d', array('abc' => 'a', 'def' => 'd')),
+                array('/http/x/{[opt]}', '/http/x/', array()),
+                array('/http/x/{[opt]}', '/http/x/show', array('opt' => 'show')),
             );
         }
 
