@@ -48,13 +48,16 @@
             foreach($tmpSplit as $k => $t)
             {
                 //Create array with the following pattern: ['template'] => 'url'
-                $temp = trim($template[$tmpSplit[$k]], "{, }");
-                $tempVal = $split[$tmpSplit[$k]];
-                if(strpos($temp, "[") !== false && strpos($temp, "]") !== false && $tempVal == "")
-                    continue;
+
+                $temp = trim($template[$tmpSplit[$k]], "{, }"); // Key
+                $tempVal = $split[$tmpSplit[$k]];               // Value
+
+                if(strpos($temp, "[") !== false && strpos($temp, "]") !== false && $tempVal == "") // contains [] -> optional + value is empty
+                    continue;                                                                      // do not add to result array
                 else
-                    $temp = trim($temp, "[]");
-                $res_raw[] = Array($temp => $tempVal);
+                    $temp = trim($temp, "[]");                                                     // remove optional markers from the key
+
+                $res_raw[] = Array($temp => $tempVal);                                             // Add to results
             }
             //Flatten multidimensional Array
             $it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($res_raw));
