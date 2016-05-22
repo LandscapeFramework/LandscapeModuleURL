@@ -4,7 +4,7 @@
 
 
     require_once('URLEngine.php');
-    use Landscape\URL\URLEngine;
+    use Landscape\URLEngine;
 
     class URLEngineTest extends \PHPUnit_Framework_TestCase
     {

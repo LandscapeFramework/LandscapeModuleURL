@@ -1,4 +1,4 @@
-<?php namespace Landscape\URL;
+<?php namespace Landscape;
 
     class URLEngine
     {
@@ -60,4 +60,3 @@
     }
 
 ?>
-
