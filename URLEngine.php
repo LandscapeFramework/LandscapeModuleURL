@@ -19,9 +19,14 @@
             {
                 if(strpos($t, "{") === false && strpos($t, "}") === false)
                 {
-                    if($t != $split[$key])
+                    try
                     {
-                        return false;
+                        if($t != $split[$key])
+                        {
+                            return false;
+                        }
+                    } catch (Exception $e) {
+                        return false; //Wrong array indexes
                     }
                 }
             }
@@ -48,9 +53,47 @@
             foreach($tmpSplit as $k => $t)
             {
                 //Create array with the following pattern: ['template'] => 'url'
-
+                $type = "string"; // default type is string
                 $temp = trim($template[$tmpSplit[$k]], "{, }"); // Key
                 $tempVal = $split[$tmpSplit[$k]];               // Value
+
+                if(strpos($temp, ":") !== false)
+                { // we have a type qualifier
+                    $pos = strpos($temp, ":");
+                    $type = substr($temp, $pos+1);
+                    $temp = substr($temp, 0, $pos);
+                }
+
+                // now, perform tests which apply to the desired type
+                switch ($type)
+                {
+                    case 'string':
+                        //TODO: Implement some type checks on strings (length)
+                        break;
+
+                    case 'int':
+                        if(!ctype_digit($tempVal))
+                            return false; // value contains other items than numbers
+                        $tempVal = intval($tempVal);
+                        break;
+
+                    case 'digit':
+                        if(!ctype_digit($tempVal) || strlen($tempVal) != 1)
+                            return false; // value contains other items than numbers or is not just a digit
+                        $tempVal = intval($tempVal);
+                        break;
+
+                    case 'regex':
+                        //TODO: implement ;)
+                        break;
+
+                    default:
+                        print("Unknown type ".$type."!\n");
+                        return false;
+                        break;
+                }
+
+
 
                 if(strpos($temp, "[") !== false && strpos($temp, "]") !== false && $tempVal == "") // contains [] -> optional + value is empty
                     continue;                                                                      // do not add to result array
