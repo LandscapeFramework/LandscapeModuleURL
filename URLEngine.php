@@ -57,11 +57,13 @@
                 $temp = trim($template[$tmpSplit[$k]], "{, }"); // Key
                 $tempVal = $split[$tmpSplit[$k]];               // Value
 
+                $args = [];
+
                 if(strpos($temp, ":") !== false)
                 { // we have a type qualifier
-                    $pos = strpos($temp, ":");
-                    $type = substr($temp, $pos+1);
-                    $temp = substr($temp, 0, $pos);
+                    $args = explode(":", $temp);
+                    $type = $args[1];
+                    $temp = $args[0];
                 }
 
                 // now, perform tests which apply to the desired type
@@ -84,7 +86,10 @@
                         break;
 
                     case 'regex':
-                        //TODO: implement ;)
+                        if(!isset($args[2]))
+                            return false; // Missing expression
+                        if(0 == preg_match($args[2], $tempVal))
+                            return false; // URL does not match
                         break;
 
                     default:

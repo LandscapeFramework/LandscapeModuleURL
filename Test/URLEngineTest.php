@@ -34,6 +34,9 @@
                 array('/blog/{name:digit}/show', '/blog/51/show', false),
                 array('/blog/{name:digital}/show', '/blog/5/show', false),
                 array('/blog/{name:digit}/show/{item:string}', '/blog/5/show/abcdef', array('name' => 5, 'item' => 'abcdef')),
+                array('/blog/{name:regex}/show', '/blog/5/show', false),
+                array('/blog/{name:regex:#^def#}/show', '/blog/adef/show', false),
+                array('/blog/{name:regex:#^def#}/show', '/blog/default/show', array('name' => 'default')),
             );
         }
 
