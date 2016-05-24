@@ -37,6 +37,10 @@
                 array('/blog/{name:regex}/show', '/blog/5/show', false),
                 array('/blog/{name:regex:#^def#}/show', '/blog/adef/show', false),
                 array('/blog/{name:regex:#^def#}/show', '/blog/default/show', array('name' => 'default')),
+                array('/blog/{name:string:max=2}/show', '/blog/adf/show', false),
+                array('/blog/{name:string:min=2}/show', '/blog/a/show', false),
+                array('/blog/{name:string:min=1:max=3}/show', '/blog/abcd/show', false),
+                array('/blog/{name:string:min=1:max=3}/show', '/blog/abc/show', array('name' => 'abc')),
             );
         }
 

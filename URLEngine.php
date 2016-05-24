@@ -70,7 +70,21 @@
                 switch ($type)
                 {
                     case 'string':
-                        //TODO: Implement some type checks on strings (length)
+                        for($x = 2; isset($args[$x]); $x++)
+                        {
+                            if(substr($args[$x], 0, 4) == "max=")
+                            {
+                                $max = intval(substr($args[$x], 4));
+                                if(strlen($tempVal) > $max)
+                                    return false;
+                            }
+                            else if(substr($args[$x], 0, 4) == "min=")
+                            {
+                                $min = intval(substr($args[$x], 4));
+                                if(strlen($tempVal) < $min)
+                                    return false;
+                            }
+                        }
                         break;
 
                     case 'int':
