@@ -9,6 +9,10 @@
         {
             "name": "Tom Messerschmidt",
             "email": "tom.messerschmidt@googlemail.com" 
+        },
+        {
+            "name": "Marius Messerschmidt",
+            "email": "marius.messerschmidt@googlemail.com" 
         }
     ],
     "require": {
