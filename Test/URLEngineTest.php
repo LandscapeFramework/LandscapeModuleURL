@@ -4,7 +4,7 @@
 
 
     require_once('URLEngine.php');
-    use Landscape\URL\URLEngine;
+    use Landscape\URLEngine;
 
     class URLEngineTest extends \PHPUnit_Framework_TestCase
     {
@@ -15,7 +15,7 @@
         {
             $parser = new URLEngine($template);
             $result = $parser->parse($url);
-            $this->assertTrue($result == $expected);
+            $this->assertEquals($result, $expected);
         }
 
         public function providerTestParser()
@@ -25,6 +25,22 @@
                 array('/blg12/show-some/{file}', '/blg12/show-some/page', array('file' => 'page')),
                 array('/blog/{name}/show', '/index/', false),
                 array('/http/{abc}/x/{def}', '/http/a/x/d', array('abc' => 'a', 'def' => 'd')),
+                array('/http/x/{[opt]}', '/http/x/', array()),
+                array('/http/x/{[opt]}', '/http/x/show', array('opt' => 'show')),
+                array('/blog/{name:string}/show', '/blog/somename/show', array('name' => 'somename')),
+                array('/blog/{name:int}/show', '/blog/somename/show', false),
+                array('/blog/{name:int}/show', '/blog/5/show', array('name' => 5)),
+                array('/blog/{name:digit}/show', '/blog/5/show', array('name' => 5)),
+                array('/blog/{name:digit}/show', '/blog/51/show', false),
+                array('/blog/{name:digital}/show', '/blog/5/show', false),
+                array('/blog/{name:digit}/show/{item:string}', '/blog/5/show/abcdef', array('name' => 5, 'item' => 'abcdef')),
+                array('/blog/{name:regex}/show', '/blog/5/show', false),
+                array('/blog/{name:regex:#^def#}/show', '/blog/adef/show', false),
+                array('/blog/{name:regex:#^def#}/show', '/blog/default/show', array('name' => 'default')),
+                array('/blog/{name:string:max=2}/show', '/blog/adf/show', false),
+                array('/blog/{name:string:min=2}/show', '/blog/a/show', false),
+                array('/blog/{name:string:min=1:max=3}/show', '/blog/abcd/show', false),
+                array('/blog/{name:string:min=1:max=3}/show', '/blog/abc/show', array('name' => 'abc')),
             );
         }
 
